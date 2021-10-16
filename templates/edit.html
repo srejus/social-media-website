@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Edit profile</title>
+    <link rel="stylesheet" href="{%static 'style.css'%}">
+    <link rel="stylesheet" href="{%static 'form.css'%}">
+    <link rel="stylesheet" href="{%static 'card.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-------Google Font Import---------------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+
+ <link rel="icon" href="https://www.logodesign.net/logo/alt-5640ld.png">
+</head>
+<body>
+    
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
+        <label class="logo fnt-1">Social</label>
+        
+
+        <ul id="navbar">
+            <li><a class="a " onclick="untrue()" href="/">HOME</a></li>
+            <li><a class="a " onclick="untrue()" href="/profile/{{request.user.id}}">PROFILE</a></li>
+            <li><a href="/profile/{{request.user.id}}" onclick="untrue()" class="a">UPLOAD</a></li>
+            <li><a href="/signup" onclick="untrue()" class="a">CREATE ACCOUNT</a></li>
+
+        </ul>
+    </nav>
+    <script>
+        function untrue(){
+            if(document.getElementById("check").checked == true ){
+                document.getElementById("check").checked = false;
+            }
+            else{
+                document.getElementById("check").checked = true;
+            }
+            
+    
+        }
+    </script>
+    <style>
+        .x{
+            outline: black;
+            border:0.7px solid black;
+        }
+    </style>
+
+
+    <!----Main Section----------->
+    <div class="main"><br><br><br>
+        <h1 class="main-text">Edit Profile</h1><br><br><br>
+        <form accept="edit" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p class="main-text">Update Profile Picture</p><br>
+            <input type="file" name="image"><br><br>
+            <input class="inp x" type="text" name="name" placeholder="Edit Display Name"><br><br>
+            <input class="inp x" type="number" name="phone" placeholder="Edit Phone Number"><br><br>
+            <textarea type="text" name="bio" placeholder="Edit bio" class="inp" style="height: 200px;border:0.7px solid black"></textarea><br><br>
+            <input type="submit" value="Update Profile" class="login-btn">
+            <br><br><br><br>
+           
+
+        </form>
+
+    </div>
+
+    </body>
+    </html>

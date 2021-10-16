@@ -1,0 +1,15 @@
+.inp{
+    width: 400px;
+    height: 40px;
+    border:none;
+    border-radius: 0.3rem;
+}
+.login-btn{
+    width: 400px;
+    height: 40px;
+    color: black;
+    outline: none;
+    border:0.8px solid black;
+    border-radius: 0.3rem;
+    background-color: springgreen;
+}

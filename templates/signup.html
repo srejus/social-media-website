@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Signup</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'form.css' %}">
+    <link rel="stylesheet" href="{% static 'card.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-------Google Font Import---------------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+
+ <link rel="icon" href="https://www.logodesign.net/logo/alt-5640ld.png">
+</head>
+<body>
+    
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
+        <label class="logo fnt-1">Social</label>
+        
+
+        <ul id="navbar">
+            <li><a class="a active" onclick="untrue()" href="#">HOME</a></li>
+            <li><a class="a" onclick="untrue()" href="#"><i class="fa fa-search fc"></i></a></li>
+            <li><a href="#" onclick="untrue()" class="a">LOGIN</a></li>
+
+       
+        </ul>
+    </nav>
+    <script>
+        function untrue(){
+            if(document.getElementById("check").checked == true ){
+                document.getElementById("check").checked = false;
+            }
+            else{
+                document.getElementById("check").checked = true;
+            }
+            
+    
+        }
+    </script>
+
+
+    <!----Main Section----------->
+    <div class="main"><br></h1><br><br><br>
+        <h1 class="main-text">Create an Account</h1><br><br>
+        {% for m in messages %}
+        <p style="color:red;">{{m}}</p>
+        {% endfor %}<br>
+        <form accept="signup" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="username" class="inp"><br><br>
+            <input type="text" name="name" placeholder="Display Name" class="inp"><br><br>
+            <input type="password" name="pass1" placeholder="password" class="inp"><br><br>
+            <input type="password" name="pass2" placeholder="confirm password" class="inp"><br><br>
+            <input type="submit" value="Create an Account" class="login-btn">
+            <br><br><br><br>
+            <a href="#">Login</a>
+
+        </form>
+    </div>
+
+    </body>
+    </html>

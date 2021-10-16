@@ -1,0 +1,136 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/dropdown.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social</title>
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <link rel="stylesheet" href="{%static 'card.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-----JQUERY CDN----->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+    <!-------Google Font Import---------------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+
+ <link rel="icon" href="https://www.logodesign.net/logo/alt-5640ld.png">
+</head>
+<body>
+    
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
+        <label class="logo fnt-1">Social</label>
+        
+
+        <ul id="navbar">
+            <li><a class="a active" onclick="untrue()" href="/">HOME</a></li>
+            <li><a class="a" onclick="untrue()" href="/profile/{{request.user.id}}">PROFILE</a></li>
+            <li><a href="/upload" onclick="untrue()" class="a">UPLOAD</a></li>
+            <li><a href="/logout" onclick="untrue()" class="a">LOGOUT</a></li>
+
+       
+        </ul>
+    </nav>
+    <script>
+        function untrue(){
+            if(document.getElementById("check").checked == true ){
+                document.getElementById("check").checked = false;
+            }
+            else{
+                document.getElementById("check").checked = true;
+            }
+            
+    
+        }
+    </script>
+
+    <!-----Search Bar Sections-->
+<div class="srch-div">
+    <input id="search" type="text" placeholder="Search a user..." class="srch-bar">
+    <a onclick="srch()" class="non"><i class="fa fa-search"></i></a>
+</div>
+
+    <!-----Search Bar Sections Ends-->
+
+
+    <!----Main Section----------->
+
+    <div class="main">
+        {% for i in myfeed %}
+        
+        
+        <!------CARD DIV FOR POST------------>
+        <div class="card-div">
+
+            <!-----user photo and name-->
+            <div class="row">
+                {% if i.user.profile_picture %}
+                <img src="{{baseUrl}}/{{i.user.profile_picture}}" alt="" class="post-sub-profile">
+                {% else %}
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" class="post-sub-profile">
+                {% endif %}
+                <div class="row c">
+                    <a style="color: black;width: auto;" class="non" href="/profile/{{i.user.user.id}}"><p class="main-text">{{i.user.Name}}</p></a>
+                    {% if i.user.verified %}
+                        <img class="verified" src="https://cdn-icons-png.flaticon.com/512/3472/3472620.png">
+                    {% endif %}
+                </div>
+
+            </div>
+            
+            <!-----user photo and name Sec Ends-->
+            <div class="col">
+                {% if i.Caption != None %}
+                    <p>{{i.Caption}}</p>
+                {% endif %}<br>
+                {% if i.Img %}
+                <img src="{{baseUrl}}/{{i.Img}}" alt="" class="post-image">
+                {% endif %}
+                
+                <p style="font-size: 15px;margin-top: 7px;opacity: 0.7;">{{i.Time}}</p>
+            </div>
+            <form>{% csrf_token %}
+            <div class="row">
+                
+                <a id="{{i.id}}" onclick="react(this.id)" class="non mid" style="margin-left:-10px;">
+                    
+                    {% if request.user in i.Likes.all %}
+                        <i id="7{{i.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;color:red;"></i>
+                    {% else %}
+                        <i id="7{{i.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;"></i>
+                    {% endif %}
+                    <p class="para-text" style="color:black;">&nbsp;&nbsp;&nbsp;<span id=1{{i.id}}>{{i.Total_likes}}</span>&nbsp;&nbsp;likes</p></a>
+                <a href="/comment/{{i.id}}" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946412.png" style="width:20px;"></a>
+                    <!-- <a href="#" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a> -->
+                {% if request.user == i.UID %}
+                <a href="#" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
+                {% endif %}  
+            </div>
+        </form>
+        </div>
+        <br><br><br>
+    <!------CARD DIV FOR POST------------>
+    {% endfor %}
+    
+    </div>
+
+    <!----Main Section Ends------->
+    
+</body>
+</html>

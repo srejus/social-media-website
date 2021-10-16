@@ -1,0 +1,123 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="{% static 'js/index.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social | Comment</title>
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <link rel="stylesheet" href="{%static 'card.css'%}">
+    <link rel="stylesheet" href="{%static 'comment.css'%}">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-----JQUERY CDN----->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+    <!-------Google Font Import---------------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+
+ <link rel="icon" href="https://www.logodesign.net/logo/alt-5640ld.png">
+</head>
+<body>
+    
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
+        <label class="logo fnt-1">Social</label>
+        
+
+        <ul id="navbar">
+            <li><a class="a active" onclick="untrue()" href="/">HOME</a></li>
+            <li><a class="a" onclick="untrue()" href="/profile/{{request.user.id}}">PROFILE</a></li>
+            <li><a href="/profile/{{request.user.id}}" onclick="untrue()" class="a">UPLOAD</a></li>
+            <li><a href="#" onclick="untrue()" class="a">LOGOUT</a></li>
+
+       
+        </ul>
+    </nav>
+    <script>
+        function untrue(){
+            if(document.getElementById("check").checked == true ){
+                document.getElementById("check").checked = false;
+            }
+            else{
+                document.getElementById("check").checked = true;
+            }
+            
+    
+        }
+    </script>
+
+
+    <!----Main Section----------->
+    <div class="main">
+        <div class="card-div" style="height: 80%;">
+            {% for i in cmt %}
+            <!----COMMENT DIV------>
+            <div class="cmt-div">
+                <div class="row">
+                    {% if i.userac.profile_picture %}
+                    <img src="{{baseUrl}}/{{i.userac.profile_picture}}" class="cmt-pro-img">
+                {% else %}
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="cmt-pro-img">
+                {% endif %}
+                    <div class="col" style="margin-top:25px;">
+                        <a href="/profile/{{i.userac.user.id}}" class="non" style="color: black;width: 180px;"><h4 class="main-text">{{i.userac.Name}}</h4></a>
+                        <p>{{i.cmt}}</p>
+                    
+                    <!----LIKE DIV ROW-------->
+                    <form>{% csrf_token %}
+                    <div class="row">
+                        <a id="{{i.id}}" onclick="commentreact(this.id)" class="non mid" style="margin-left:-10px;">
+                    
+                            {% if request.user in i.commentlike.all %}
+                                <i id="7{{i.id}}" class="fa fa-heart" style="width: 50px;font-size: 15px;color:red;margin-bottom: 10px;"></i>
+                            {% else %}
+                                <i id="7{{i.id}}" class="fa fa-heart" style="width: 50px;font-size: 15px;margin-bottom: 10px;"></i>
+                            {% endif %}
+                            <p class="para-text" style="color:black;margin-bottom: 10px;">&nbsp;&nbsp;&nbsp;<span id=1{{i.id}}>{{i.Total_likes}}</span>&nbsp;&nbsp;likes</p></a>
+                           
+                        </div>
+                    </form>
+                    <!----LIKE DIV ROW- ENDS----->
+
+                </div>
+            </div>
+        </div>
+
+            <!----COMMENT DIV------>
+            {% endfor %}
+       
+            
+            <br><br>
+
+       
+                    <!-------Comment Typing Box----->
+                    <div class="commentbox">
+                    <form>{% csrf_token %}
+                        <div class="row">
+                            <input type="hidden" name="cmtpstid" value="{{post.id}}">
+                            <input name="mycmt" type="text" class="cmtbox" placeholder="write a comment...">
+                            <button onclick="postcomment()" class="cmt-btn">POST</button>
+                        </div>
+                    </form>
+                    </div>
+        
+                    <!-------Comment Typing Box Ends----->
+    </div> </div>
+
+
+    
+    </body>
+    </html>
