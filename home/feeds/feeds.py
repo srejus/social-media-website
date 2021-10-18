@@ -1,4 +1,6 @@
 from  home.models import Following, Post
+from datetime import datetime, timedelta
+
 
 def feedalgo(id):
     #Fetch the Users followings
@@ -12,8 +14,11 @@ def feedalgo(id):
         except:
             pass
 
+    time_threshold = datetime.now() - timedelta(hours=3)
 
-    qs=Post.objects.filter(UID__in=flst).order_by('-Time')
+    print(time_threshold)
+
+    qs=Post.objects.filter(UID__in=flst).filter(Time__lt=time_threshold).order_by('-Time')
     print(qs)
 
 #Use nested for loops for out the data

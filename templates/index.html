@@ -6,7 +6,8 @@
     <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/dropdown.js' %}"></script>
 
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,23 +31,31 @@
 <body>
     
     <nav>
-        <input type="checkbox" id="check">
-        <label for="check" class="checkbtn">
-            <i class="fa fa-bars"></i>
-        </label>
+       
         <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
-        <label class="logo fnt-1">Social</label>
+        <div class="nav-row">
+        <label class="fnt-1" style="font-size: 40px;margin-left: 10px;">Social</label>
+            <div class="nav-row-itm">
+            <!-- <a href="/"  style="margin-top: 0px;margin-left: 10px;"> <i class="fa fa-home it" style="font-size: 35px;margin-left: 40px;"></i></a> -->
+
+           <a href="/upload"  style="margin-top: 0px;margin-left: 10px;"> <i class="fa fa-camera it" style="font-size: 30px;margin-left: 40px;"></i></a>
+           &nbsp;&nbsp;<a href="/profile/{{request.user.id}}"  style="margin-top: 0px;"> <i class="fa fa-user it" style="font-size: 30px;margin-left: 40px;"></i></a>
+        </div>
+        
+    </div>
+    
+    
         
 
-        <ul id="navbar">
+        <!-- <ul id="navbar">
             <li><a class="a active" onclick="untrue()" href="/">HOME</a></li>
             <li><a class="a" onclick="untrue()" href="/profile/{{request.user.id}}">PROFILE</a></li>
             <li><a href="/upload" onclick="untrue()" class="a">UPLOAD</a></li>
             <li><a href="/logout" onclick="untrue()" class="a">LOGOUT</a></li>
 
        
-        </ul>
-    </nav>
+        </ul> -->
+   
     <script>
         function untrue(){
             if(document.getElementById("check").checked == true ){
@@ -61,7 +70,9 @@
     </script>
 
     <!-----Search Bar Sections-->
+    <br><br><br><br>
 <div class="srch-div">
+    
     <input id="search" type="text" placeholder="Search a user..." class="srch-bar">
     <a onclick="srch()" class="non"><i class="fa fa-search"></i></a>
 </div>
@@ -70,7 +81,34 @@
 
 
     <!----Main Section----------->
+    {% if y %}
+    <div style="display: flex;align-items: center;flex-direction: column;margin:7px;">
+        <h1 class="main-text">Hello,follow people for get feeds...</h1><br>
+    </div>
+    
 
+    {% endif %}
+    
+{% for s in y %}
+{% if s.user != request.user %}
+
+    <!-----New User------------->
+    <div class="col" style="display: flex;flex-direction: column;align-items: center;">
+        <div class="card-div" style="width:200px;display:flex;align-items:center;margin-left: 20px;margin-top:15px;">
+            {% if s.profile_picture %}
+            <img src="{{baseUrl}}/{{s.profile_picture}}" alt="" class="post-sub-profile">
+            {% else %}
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" class="post-sub-profile">
+            {% endif %}            <h4 class="main-text">{{s.Name}}</h4>
+            <a href="/profile/{{s.user.id}}" class="non" style="margin-left: -50px;"><button class="main-btn">View</button></a><br>
+        </div>
+    </div>
+
+    <!------New User Ends-------->
+    {% endif %}
+{% endfor %}
+
+      
     <div class="main">
         {% for i in myfeed %}
         

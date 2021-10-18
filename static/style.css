@@ -66,22 +66,63 @@ ul li{
     display: none;
 }
 
+.nav-row{
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    height: 50px;
+}
+
+.nav-row-itm{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    
+    width: 100%;
+}
+.it{
+    font-size: 50px;
+    margin-left: 40px;
+}
+
 @media(max-width: 952px){
     .logo{
         font-size: 35px;
         
         
     }
+  
+
     nav ul li a{
         font-size: 16px;
     }
   
 }
 .fa{
+    font-size: 30px;
     color: black;
 }
 
 @media(max-width:852px){
+    .nav-row{
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+        height: 50px;
+    }
+    .it{
+        font-size: 20px;
+        margin-left: -40px;
+    }
+    .nav-row-itm{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        
+        width: 70%;
+    }
     .checkbtn{
         display: block;
         margin-top: -20px;

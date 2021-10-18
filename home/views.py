@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
+
+
 from django.db.models import Q 
 
 # Create your views here.
@@ -18,8 +20,12 @@ from django.db.models import Q
 @login_required(login_url='login')
 def index(request):
     id=request.user.id
-    myfeeds=feeds.feedalgo(id)
-    return render(request,'index.html',{'myfeed':myfeeds})
+    if Following.objects.filter(Bywho=id).exists():
+        myfeeds=feeds.feedalgo(id)
+        return render(request,'index.html',{'myfeed':myfeeds})
+    else:
+        x=Account.objects.order_by('?')[:11]
+        return render(request,'index.html',{'y':x})
 
 def Login(request):
     if request.method=='POST':

@@ -31,22 +31,16 @@
 <body>
     
     <nav>
-        <input type="checkbox" id="check">
-        <label for="check" class="checkbtn">
-            <i class="fa fa-bars"></i>
-        </label>
-        <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
-        <label class="logo fnt-1">Social</label>
-        
-
-        <ul id="navbar">
-            <li><a class="a " onclick="untrue()" href="/">HOME</a></li>
-            <li><a class="a active" onclick="untrue()" href="#">PROFILE</a></li>
-            <li><a href="/upload" onclick="untrue()" class="a">UPLOAD</a></li>
-            <li><a href="/logout" onclick="untrue()" class="a">LOGOUT</a></li>
-
        
-        </ul>
+        <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
+        <div class="nav-row">
+            <a href="/" style="text-decoration: none;color: black;"><label class="fnt-1" style="font-size: 40px;margin-left: 10px;">Social</label></a>
+                <div class="nav-row-itm">
+                <!-- <a href="/"  style="margin-top: 0px;margin-left: 25px;"> <i class="fa fa-home it" style="font-size: 35px;margin-left: 40px;"></i></a> -->
+
+               <a href="/upload"  style="margin-top: 0px;margin-left: 25px;"> <i class="fa fa-camera it" style="font-size: 30px;margin-left: 40px;"></i></a>
+               &nbsp;&nbsp;<a href="/profile/{{request.user.id}}"  style="margin-top: 0px;"> <i class="fa fa-user it" style="font-size: 30px;margin-left: 40px;"></i></a>
+            </div>
     </nav>
     <script>
         function untrue(){
