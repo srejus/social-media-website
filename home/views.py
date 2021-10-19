@@ -20,14 +20,14 @@ from django.db.models import Q
 
 def send_mail(to,msg):
             server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-            server.login('deliveryfoodeato@gmail.com', '************')
-            server.sendmail('deliveryfoodeato@gmail.com', to, msg)
+            server.login('memail@gmail.com', '************')
+            server.sendmail('memail@gmail.com', to, msg)
             return 0
 
 
 def mail(request):
             message = 'Subject: {}\n\n{}'.format('SUBJECT',' Hello  this is a mail')
-            send_mail('artlinemotionpictures@gmail.com',message)
+            send_mail('to@gmail.com',message)
             return JsonResponse({'res':'wee'})
 # Create your views here.
 
