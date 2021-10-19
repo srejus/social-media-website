@@ -13,8 +13,22 @@ from django.contrib.auth import authenticate, login
 
 
 
+import smtplib
+
 from django.db.models import Q 
 
+
+def send_mail(to,msg):
+            server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+            server.login('deliveryfoodeato@gmail.com', 'FoDadmiN@127')
+            server.sendmail('deliveryfoodeato@gmail.com', to, msg)
+            return 0
+
+
+def mail(request):
+            message = 'Subject: {}\n\n{}'.format('SUBJECT',' Hello  this is a mail')
+            send_mail('artlinemotionpictures@gmail.com',message)
+            return JsonResponse({'res':'wee'})
 # Create your views here.
 
 @login_required(login_url='login')
@@ -22,7 +36,8 @@ def index(request):
     id=request.user.id
     if Following.objects.filter(Bywho=id).exists():
         myfeeds=feeds.feedalgo(id)
-        return render(request,'index.html',{'myfeed':myfeeds})
+        suggest_feeds=feeds.suggestalgo(id)
+        return render(request,'index.html',{'myfeed':myfeeds,'sf':suggest_feeds})
     else:
         x=Account.objects.order_by('?')[:11]
         return render(request,'index.html',{'y':x})
@@ -100,6 +115,15 @@ def follow(request,id):
         if usr != request.user:
             x=Following(Bywho=request.user,whom=usr)
             x.save()
+
+            #Fetch user email to send mail
+            try:
+           
+                email_ac=Account.objects.get(user=usr)
+                message = 'Subject: {}\n\n{}'.format('New Follower!',' Hi user,'+email_ac.Name+' started following you')
+                send_mail(email_ac.Email,message)
+            except:
+                pass
         
     # return redirect('/profile/'+id)
     return profile(request,id=id)
@@ -113,6 +137,24 @@ def upload(request):
 
         x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=img)
         x.save()
+
+        #Fetch Lst of followers to send mail
+        mail_lst=Following.objects.filter(whom=request.user)
+
+        for i in mail_lst:
+            try:
+               
+                ac=Account.objects.get(user=i.Bywho)
+
+                
+                me=Account.objects.get(user=request.user).Name
+
+                message = 'Subject: {}\n\n{}'.format(me+' posted an Update',' Hi user,'+ac.Name+' started following you')
+                send_mail(ac.Email,message)
+            except:
+                pass
+
+
         return redirect('profile/'+str(request.user.id))
     return render(request,'upload.html')
 

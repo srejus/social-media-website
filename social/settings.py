@@ -128,3 +128,12 @@ STATIC_ROOT=os.path.join(BASE_DIR,'assets')
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
+
+# EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST_USER="deliveryfoodeato@gmail.com"
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_PORT=465
+# EMAIL_USE_TLS=True
+# EMAIL_USE_SSL = False
+# EMAIL_HOST_PASSWORD="FoDadmiN@127"
+

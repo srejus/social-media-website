@@ -16,4 +16,5 @@ urlpatterns=[
     path('search/<str:term>',views.search,name='search'),
     path('edit',views.edit,name='edit'),
     path('logout',views.lout,name='lout'),
+    path('mail',views.mail,name='mail'),
 ]

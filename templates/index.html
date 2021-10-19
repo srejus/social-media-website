@@ -165,6 +165,80 @@
         <br><br><br>
     <!------CARD DIV FOR POST------------>
     {% endfor %}
+
+    
+
+{% if sf %}
+
+<h3 class="main-text">Suggested Post for you</h3><br><br>
+
+{% endif %}
+
+    {% for i in sf %}
+    {% if i.UID != request.user %}
+        
+        
+        <!------CARD DIV FOR POST------------>
+        <div class="card-div">
+
+            <!-----user photo and name-->
+            <div class="row">
+                {% if i.user.profile_picture %}
+                <img src="{{baseUrl}}/{{i.user.profile_picture}}" alt="" class="post-sub-profile">
+                {% else %}
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" class="post-sub-profile">
+                {% endif %}
+                <div class="row c">
+                    <a style="color: black;width: auto;" class="non" href="/profile/{{i.user.user.id}}"><p class="main-text">{{i.user.Name}}</p></a>
+                    {% if i.user.verified %}
+                        <img class="verified" src="https://cdn-icons-png.flaticon.com/512/3472/3472620.png">
+                    {% endif %}
+                </div>
+
+            </div>
+            
+            <!-----user photo and name Sec Ends-->
+            <div class="col">
+                {% if i.Caption != None %}
+                    <p>{{i.Caption}}</p>
+                {% endif %}<br>
+                {% if i.Img %}
+                <img src="{{baseUrl}}/{{i.Img}}" alt="" class="post-image">
+                {% endif %}
+                
+                <p style="font-size: 15px;margin-top: 7px;opacity: 0.7;">{{i.Time}}</p>
+            </div>
+            <form>{% csrf_token %}
+            <div class="row">
+                
+                <a id="{{i.id}}" onclick="react(this.id)" class="non mid" style="margin-left:-10px;">
+                    
+                    {% if request.user in i.Likes.all %}
+                        <i id="7{{i.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;color:red;"></i>
+                    {% else %}
+                        <i id="7{{i.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;"></i>
+                    {% endif %}
+                    <p class="para-text" style="color:black;">&nbsp;&nbsp;&nbsp;<span id=1{{i.id}}>{{i.Total_likes}}</span>&nbsp;&nbsp;likes</p></a>
+                <a href="/comment/{{i.id}}" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946412.png" style="width:20px;"></a>
+                    <!-- <a href="#" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a> -->
+                {% if request.user == i.UID %}
+                <a href="#" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
+                {% endif %}  
+            </div>
+        </form>
+        </div>
+        <br><br><br>
+    <!------CARD DIV FOR POST------------>
+    {% endif %}
+    {% endfor %}
+
+
+
+
+
+
+
+
     
     </div>
 

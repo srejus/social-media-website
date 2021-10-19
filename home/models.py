@@ -5,6 +5,7 @@ from django.db import models
 class Account(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     Name=models.CharField(max_length=100,null=True,blank=True)
+    Email=models.CharField(max_length=100,null=True,blank=True)
     phone=models.CharField(max_length=12,blank=True,null=True)
     profile_picture=models.ImageField(null=True,blank=True)
     Place=models.CharField(max_length=100,null=True,blank=True)
