@@ -20,7 +20,7 @@ from django.db.models import Q
 
 def send_mail(to,msg):
             server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-            server.login('deliveryfoodeato@gmail.com', 'FoDadmiN@127')
+            server.login('deliveryfoodeato@gmail.com', '************')
             server.sendmail('deliveryfoodeato@gmail.com', to, msg)
             return 0
 
