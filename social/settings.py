@@ -135,5 +135,5 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
 # EMAIL_PORT=465
 # EMAIL_USE_TLS=True
 # EMAIL_USE_SSL = False
-# EMAIL_HOST_PASSWORD="FoDadmiN@127"
+# EMAIL_HOST_PASSWORD="**********"
 
