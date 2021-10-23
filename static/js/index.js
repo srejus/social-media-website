@@ -75,3 +75,24 @@ function srch(){
     let term=document.getElementById('search').value;
     window.location = '/search/' +term;
 }
+
+function share(url){
+   var curl=window.location.href;
+   var domn=location.protocol+'//'+location.host;
+
+    // var s = '/Controller/Action';
+    var n = curl.indexOf('?');
+    s = curl.substring(0, n != -1 ? n : curl.length);
+    document.write(curl);
+    var fullurl=domn+url;
+      /* Select the text field */
+    fullurl;
+    // fullurl.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(fullurl);
+
+    /* Alert the copied text */
+    alert("Copied to clipboard: " + fullurl);
+    location.reload();
+}

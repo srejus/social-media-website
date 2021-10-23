@@ -49,12 +49,12 @@
 
     <!----Main Section----------->
     <div class="main"><br><br><br>
-        <h1 class="main-text">Upload Photo</h1><br><br><br>
+        <h1 class="main-text">Post an Quick Update</h1><br><br><br>
         <form accept="upload" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="file" name="image"><br><br>
-            <textarea type="text" name="caption" placeholder="Caption...." class="inp" style="height: 200px;border:0.7px solid black"></textarea><br><br>
-            <input type="submit" value="Upload" class="login-btn">
+            
+            <textarea type="text" name="caption" placeholder="What's on your mind...." class="inp" style="padding:5px;height: 200px;border:0.7px solid black"></textarea><br><br>
+            <input type="submit" value="Post" class="login-btn">
             <br><br><br><br>
            
 

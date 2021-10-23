@@ -17,4 +17,5 @@ urlpatterns=[
     path('edit',views.edit,name='edit'),
     path('logout',views.lout,name='lout'),
     path('mail',views.mail,name='mail'),
+    path("post/<int:id>",views.share,name='share'),
 ]

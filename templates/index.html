@@ -155,7 +155,7 @@
                     {% endif %}
                     <p class="para-text" style="color:black;">&nbsp;&nbsp;&nbsp;<span id=1{{i.id}}>{{i.Total_likes}}</span>&nbsp;&nbsp;likes</p></a>
                 <a href="/comment/{{i.id}}" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946412.png" style="width:20px;"></a>
-                    <!-- <a href="#" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a> -->
+                <a type="button" onclick="share('/post/{{i.id}}')" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
                 {% if request.user == i.UID %}
                 <a href="#" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
                 {% endif %}  

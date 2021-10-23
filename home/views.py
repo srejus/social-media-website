@@ -289,3 +289,7 @@ def edit(request):
 def lout(request):
     logout(request) 
     return index(request)
+
+def share(request,id):
+    x=Post.objects.get(id=id)
+    return render(request,'post.html',{"i":x})
