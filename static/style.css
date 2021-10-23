@@ -263,3 +263,67 @@ ul li{
     margin-left: 15px;
     
 }
+/*Responsive Row*/
+
+
+.resp-row{
+    width: 90%;
+    min-height: 280px;
+    display: flex;
+    flex-direction: row;
+}
+.desktop-side{
+    margin-left: 15px;
+    /* border:0.7px solid black; */
+    border:none;
+    /* shadow: 2px 2px; */
+    border-radius: 0.3rem;
+    height: 500px;
+    width: 400px;
+    margin-bottom: 10px;
+    position: -webkit-sticky; /* Safari & IE */
+    position: sticky;
+    float: left;
+    background-color: white;
+}
+.side-bar-p{
+    margin-top: 8px;
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.desktop-col{
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.d-icon{
+    font-size: 30px;
+    width:70px;
+    height: 70px;
+}
+
+
+.test{
+        width: 170px;
+        height: 120px;
+        background-color: black;
+}
+@media screen and (max-width: 852px) {
+    .test {
+        display: none !important;
+    }
+    .resp-row{
+        /* display: none !important; */
+        display: flex;
+        flex-direction: column;
+    }
+    .desktop-side{
+        display: none !important;
+    }
+}

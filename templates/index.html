@@ -109,6 +109,24 @@
 {% endfor %}
 
       
+<div class="resp-row">
+
+
+    <div class="desktop-side">
+        <div class="desktop-col">
+         
+         
+            <a href="/" class="non"><i class="fa fa-home" style="font-size: 30px;display: flex;flex-direction: row;"><p class="side-bar-p">Home</p></i></a><br><br>
+            
+            <a href="/profile/{{request.user.id}}" class="non"><i class="fa fa-user" style="font-size: 30px;display: flex;flex-direction: row;"><p class="side-bar-p">Profile</p></i></a><br><br>
+            
+            <a href="/upload" class="non"><i class="fa fa-pencil" style="font-size: 30px;display: flex;flex-direction: row;"><p class="side-bar-p">Post</p></i></a><br><br>
+
+         <a href="" class="non"><i class="fa fa-cog" style="font-size: 30px;display: flex;flex-direction: row;"><p class="side-bar-p">Settings</p></i></a><br><br>
+        </div>
+    </div>
+
+
     <div class="main">
         {% for i in myfeed %}
         
@@ -239,8 +257,23 @@
 
 
 
+
     
     </div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
 
     <!----Main Section Ends------->
     
