@@ -25,10 +25,10 @@ def send_mail(to,msg):
             return 0
 
 
-def mail(request):
-            message = 'Subject: {}\n\n{}'.format('SUBJECT',' Hello  this is a mail')
-            send_mail('to@gmail.com',message)
-            return JsonResponse({'res':'wee'})
+# def mail(request):
+#             message = 'Subject: {}\n\n{}'.format('SUBJECT',' Hello  this is a mail')
+#             send_mail('to@gmail.com',message)
+#             return JsonResponse({'res':'wee'})
 # Create your views here.
 
 @login_required(login_url='login')
@@ -117,13 +117,13 @@ def follow(request,id):
             x.save()
 
             #Fetch user email to send mail
-            try:
+            # try:
            
-                email_ac=Account.objects.get(user=usr)
-                message = 'Subject: {}\n\n{}'.format('New Follower!',' Hi user,'+email_ac.Name+' started following you')
-                send_mail(email_ac.Email,message)
-            except:
-                pass
+            #     email_ac=Account.objects.get(user=usr)
+            #     message = 'Subject: {}\n\n{}'.format('New Follower!',' Hi user,'+email_ac.Name+' started following you')
+            #     send_mail(email_ac.Email,message)
+            # except:
+            #     pass
         
     # return redirect('/profile/'+id)
     return profile(request,id=id)
@@ -139,20 +139,20 @@ def upload(request):
         x.save()
 
         #Fetch Lst of followers to send mail
-        mail_lst=Following.objects.filter(whom=request.user)
+        # mail_lst=Following.objects.filter(whom=request.user)
 
-        for i in mail_lst:
-            try:
+        # for i in mail_lst:
+        #     try:
                
-                ac=Account.objects.get(user=i.Bywho)
+        #         ac=Account.objects.get(user=i.Bywho)
 
                 
-                me=Account.objects.get(user=request.user).Name
+        #         me=Account.objects.get(user=request.user).Name
 
-                message = 'Subject: {}\n\n{}'.format(me+' posted an Update',' Hi user,'+ac.Name+' started following you')
-                send_mail(ac.Email,message)
-            except:
-                pass
+        #         message = 'Subject: {}\n\n{}'.format(me+' posted an Update',' Hi user,'+ac.Name+' started following you')
+        #         send_mail(ac.Email,message)
+        #     except:
+        #         pass
 
 
         return redirect('profile/'+str(request.user.id))
