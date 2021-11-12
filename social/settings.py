@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'home',
+    'topics',
     'django.contrib.admin',
     'django.contrib.auth',
     'django_cleanup.apps.CleanupConfig',
