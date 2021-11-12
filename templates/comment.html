@@ -61,11 +61,13 @@
             <!----COMMENT DIV------>
             <div class="cmt-div">
                 <div class="row">
+                    
                     {% if i.userac.profile_picture %}
                     <img src="{{baseUrl}}/{{i.userac.profile_picture}}" class="cmt-pro-img">
                 {% else %}
                     <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="cmt-pro-img">
                 {% endif %}
+                
                     <div class="col" style="margin-top:25px;">
                         <a href="/profile/{{i.userac.user.id}}" class="non" style="color: black;width: 180px;"><h4 class="main-text">{{i.userac.Name}}</h4></a>
                         <p>{{i.cmt}}</p>
@@ -73,6 +75,7 @@
                     <!----LIKE DIV ROW-------->
                     <form>{% csrf_token %}
                     <div class="row">
+                        
                         <a id="{{i.id}}" onclick="commentreact(this.id)" class="non mid" style="margin-left:-10px;">
                     
                             {% if request.user in i.commentlike.all %}
@@ -83,6 +86,7 @@
                             <p class="para-text" style="color:black;margin-bottom: 10px;">&nbsp;&nbsp;&nbsp;<span id=1{{i.id}}>{{i.Total_likes}}</span>&nbsp;&nbsp;likes</p></a>
                            
                         </div>
+                        
                     </form>
                     <!----LIKE DIV ROW- ENDS----->
 
