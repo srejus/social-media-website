@@ -2,6 +2,8 @@ from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import logout
+
+from home.extra.comment import comment_delete
 from . feeds import feeds
 from . models import *
 MESSAGE_TAGS = {
@@ -11,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
+from .extra import comment
 
 
 import smtplib
@@ -191,6 +194,16 @@ def react(request):
                     like=1
         return JsonResponse({'lk':like,'likecount':c})
     pass
+
+def commentdelete(request):
+    if request.method == 'POST':
+        idstr = request.POST.get('pid')
+        id = int(idstr.replace('z',''))
+        print(idstr)
+        #Code for remove a comment
+        comment_delete(id)
+        return JsonResponse({'res':'ok'})
+
 
 @login_required(login_url='login')
 def comment(request,id):

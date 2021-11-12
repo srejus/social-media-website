@@ -55,6 +55,23 @@ function commentreact(fetched_id){
         });
 }
 
+function commentdelete(fetched_id){
+    $.ajax({
+        method: "POST",
+        url: "/commentdelete",
+        data: { 
+          pid:fetched_id,
+         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+        }
+        })
+        .done(function( msg ) {
+            console.log(msg);
+            location.reload();
+           
+            
+        });
+}
+
 
 function postcomment(){
     $.ajax({

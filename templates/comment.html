@@ -75,6 +75,7 @@
                     <!----LIKE DIV ROW-------->
                     <form>{% csrf_token %}
                     <div class="row">
+                        <!------Row section contains like icon with likes(text)------>
                         
                         <a id="{{i.id}}" onclick="commentreact(this.id)" class="non mid" style="margin-left:-10px;">
                     
@@ -84,10 +85,19 @@
                                 <i id="7{{i.id}}" class="fa fa-heart" style="width: 50px;font-size: 15px;margin-bottom: 10px;"></i>
                             {% endif %}
                             <p class="para-text" style="color:black;margin-bottom: 10px;">&nbsp;&nbsp;&nbsp;<span id=1{{i.id}}>{{i.Total_likes}}</span>&nbsp;&nbsp;likes</p></a>
-                           
+                        
+                        </form>
+                        <form>{% csrf_token %}
+
+                            {% if request.user == i.userac.user %}
+                                <a id="z{{i.id}}" onclick="commentdelete(this.id)" style="color:red;margin-top: 10px;margin-left: 45px;text-decoration: none;">Delete Comment</a>
+                            {% endif %}
+                                <!------Row section contains like icon with likes(text) Ends------>
+                            </form>
+
                         </div>
                         
-                    </form>
+                    
                     <!----LIKE DIV ROW- ENDS----->
 
                 </div>
