@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 
 from home.extra.comment import comment_delete
+from topics.models import Topic
 from . feeds import feeds
 from . models import *
 MESSAGE_TAGS = {
@@ -274,7 +275,12 @@ def search(request,term):
     qs = Account.objects.all()
     for t in term.split():
         qs = qs.filter( Q(Name__icontains = t))
-    return render(request,'search.html',{'q':qs})
+
+
+        #Topics
+
+        tps = Topic.objects.all()
+    return render(request,'search.html',{'q':qs,'ts':tps})
 
 def edit(request):
     if request.method == 'POST':

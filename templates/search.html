@@ -57,6 +57,7 @@
     <!----Main Section----------->
     <div class="main">
         <div class="card-div" style="height: 80%;">
+           
             {% for i in q %}
             <!----COMMENT DIV------>
             <div class="cmt-div">
@@ -81,6 +82,29 @@
 
             <!----COMMENT DIV------>
             {% endfor %}
+
+            <h4 class="main-text">Topics</h4>
+            <!-----Listing topics---------->
+
+            {% for i in ts %}
+            <div class="cmt-div">
+                <div class="row">
+                    
+                    <div class="col" style="margin-top:25px;margin-left: 10px;">
+                        <h4 class="main-text">#{{i.topic_name}}</h4>
+                    </div>
+                    <div style="margin-top: 25px;margin-right: 10px;margin-bottom: 25px;margin-left: 10px;">
+                        
+                            <a href="#" style="color: red;">view</a>
+                        
+                    </div>
+                </div>
+                    
+            </div>
+            {% endfor %}
+
+
+             <!-----Listing topics Ends---------->
        
             
             
