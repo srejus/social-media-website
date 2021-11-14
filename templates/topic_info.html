@@ -58,18 +58,15 @@
 
     <!----Main Section----------->
     <div class="main"><br></h1><br><br><br><br><br>
-        <h1 class="main-text">#Information Techonology</h1>
+        <h1 class="main-text">#{{tp.topic_name}}</h1>
         <div class="row v">
-            <h2 class="main-text">{{p.Name}}</h2>
-            {% if p.verified %}
-                <img class="verified" src="https://cdn-icons-png.flaticon.com/512/3472/3472620.png">
-            {% endif %}
+           
         </div>
 
         <!-----Section Row for Followers and Following----->
 
         <div class="row1">
-            <h5 class="main-text">{{folowr}}1000 people follow </h6><h1>&nbsp;&nbsp;&nbsp;</h5>
+            <h5 class="main-text">{{c}} people follow </h6><h1>&nbsp;&nbsp;&nbsp;</h5>
             
         </div>
 
@@ -77,15 +74,13 @@
 
 
         
-        {% if request.user ==  p.user %}
-            <a href="/edit" class="non" style="margin-left: -40px;"><button class="main-btn"><i class="fa fa-pencil"></i>&nbsp;&nbsp;&nbsp;Edit Profile</button></a>
+        
+        {% if fw %}
+            <a href="/unfollow_topic/{{tp.id}}" class="non" style="margin-left: -40px;"><button class="main-btn">Unfollow</button></a>
         {% else %}
-        {% if i %}
-            <a href="/follow/{{p.user.id}}" class="non" style="margin-left: -40px;"><button class="main-btn">Unfollow</button></a>
-        {% else %}
-            <a href="/follow/{{p.user.id}}" class="non" style="margin-left: -40px;"><button class="main-btn">Follow</button></a>
+            <a href="/follow_topic/{{tp.id}}" class="non" style="margin-left: -40px;"><button class="main-btn">Follow</button></a>
         {% endif %}
-        {% endif %}
+        
 
         <br><br><br>
     </div>
