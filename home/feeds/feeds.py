@@ -1,4 +1,4 @@
-from  home.models import Following, Post
+from  home.models import Following, Post,Blog
 from datetime import datetime, timedelta
 from topics.models import *
 
@@ -27,6 +27,29 @@ def feedalgo(id):
 
     return(qs)
 
+def blogalgo(id):
+    #Fetch the Users followings
+    followings=Following.objects.filter(Bywho=id)
+
+    
+    flst=[]
+    for i in followings:
+        try:
+            flst.append(i.whom.id)
+        except:
+            pass
+
+    time_threshold = datetime.now() - timedelta(hours=3)
+
+    print(time_threshold)
+
+    qs=Blog.objects.filter(user__in=flst).filter(Time__lt=time_threshold).order_by('-Time')
+    
+
+#Use nested for loops for out the data
+
+
+    return(qs)
 
 def suggestalgo(id):
     #Fetch the Users followings

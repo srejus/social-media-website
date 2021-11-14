@@ -44,9 +44,19 @@ class Comment(models.Model):
 
 
 
-   
-
 
 class Following(models.Model):
     Bywho=models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name='follower')#aru follow cheyunnu
     whom=models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name='following')#are follow cheyunnu
+
+
+class Blog(models.Model):
+    title = models.CharField(max_length=250)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    content = models.TextField(null=True,blank=True)
+    Time=models.DateTimeField(auto_now=True)
+    posted_time = models.CharField(max_length=250,null=True,blank=True)
+
+    def __str__(self):
+        return self.title
+

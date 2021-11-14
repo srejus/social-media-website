@@ -47,6 +47,7 @@ def index(request):
         myfeeds=feeds.feedalgo(id)
         suggest_feeds=feeds.suggestalgo(id)
         topic_feed = feeds.topic_algo(id)
+        
         return render(request,'index.html',{'myfeed':myfeeds,'sf':suggest_feeds,'tf':topic_feed})
     else:
         suggest_feeds=feeds.suggestalgo(id)
