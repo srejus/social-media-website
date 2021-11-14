@@ -21,6 +21,11 @@ import smtplib
 
 from django.db.models import Q 
 
+#Image Compression
+from io import BytesIO
+from PIL import Image
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 
 def send_mail(to,msg):
             server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
@@ -44,8 +49,9 @@ def index(request):
         topic_feed = feeds.topic_algo(id)
         return render(request,'index.html',{'myfeed':myfeeds,'sf':suggest_feeds,'tf':topic_feed})
     else:
+        suggest_feeds=feeds.suggestalgo(id)
         x=Account.objects.order_by('?')[:11]
-        return render(request,'index.html',{'y':x})
+        return render(request,'index.html',{'sf':suggest_feeds})
 
 def Login(request):
     if request.method=='POST':
@@ -139,6 +145,13 @@ def upload(request):
         topic = request.POST.get('topic')
         img=request.FILES.get('image')
 
+        # compress the image here and then save it
+        i = Image.open(img)
+        thumb_io = BytesIO()
+        i.save(thumb_io, format='JPEG', quality=70)
+        inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, str(img), 
+                                                'image/jpeg', thumb_io.tell(), None)
+
         #Find current time and date
         # datetime object containing current date and time
         now = datetime.now()
@@ -150,7 +163,7 @@ def upload(request):
 
         curent_ac=Account.objects.get(user=request.user)
 
-        x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=img,post_topic=topic,posted_time=dt_string)
+        x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=inmemory_uploaded_file,post_topic=topic,posted_time=dt_string)
         x.save()
 
         #Fetch Lst of followers to send mail
@@ -324,3 +337,35 @@ def lout(request):
 def share(request,id):
     x=Post.objects.get(id=id)
     return render(request,'post.html',{"i":x})
+
+
+def followg(request,id):
+    #People who follow by the user
+
+    res_un = Following.objects.filter(Bywho = id)
+    
+    res = []
+
+    for i in res_un:
+        res.append(i.whom)
+
+    usrs = Account.objects.filter(user__in = res)
+    
+    return render(request,'search.html',{'q':usrs})
+
+
+def followers(request,id):
+    #People who followed  the user
+
+    res_un = Following.objects.filter(whom = id)
+    
+    res = []
+
+    for i in res_un:
+        res.append(i.Bywho)
+    
+    usrs = Account.objects.filter(user__in = res)
+
+    return render(request,'search.html',{'q':usrs})
+
+    

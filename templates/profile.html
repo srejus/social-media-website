@@ -73,8 +73,10 @@
         <!-----Section Row for Followers and Following----->
 
         <div class="row1">
-            <h5 class="main-text">{{folowr}} Followers</h6><h1>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h5>
-            <h5 class="main-text">{{folow}} Followings</h5>
+           <h5 class="main-text"><a class="non" style="color: black;" href="/followers/{{p.user.id}}"> {{folowr}} Followers</a></h6><h1>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</h5>
+            <h5 class="main-text"><a class="non" style="color: black;" href="/following/{{p.user.id}}"> {{folow}} Followings</a></h6><h1></h5>
+
+          
         </div><br>
 
         {% if p.Bio != None %}
