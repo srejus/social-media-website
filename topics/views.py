@@ -1,6 +1,8 @@
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 
+from home.models import Post
+
 from topics.models import Topic, Topic_follow
 
 # Create your views here.
@@ -29,6 +31,10 @@ def topic(request,id):
 
     flw = False
 
+    #Fetched the posts that related to the topic tag
+
+    pst = Post.objects.filter(post_topic = tpc.topic_name)
+
     #Count total number of followers for this particular topic
 
     count = Topic_follow.objects.filter(topic_id = tpc).count()
@@ -40,4 +46,4 @@ def topic(request,id):
         flw = True
     else:
         flw = False
-    return render(request,'topic_info.html',{'tp':tpc,'fw':flw,'c':count})
+    return render(request,'topic_info.html',{'tp':tpc,'fw':flw,'c':count,'post':pst})
