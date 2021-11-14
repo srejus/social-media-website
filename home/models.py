@@ -19,6 +19,7 @@ class Account(models.Model):
 class Post(models.Model):
     UID=models.ForeignKey(User,on_delete=models.CASCADE,related_name='uid')
     Time=models.DateTimeField(auto_now=True)
+    posted_time = models.CharField(max_length=250,null=True,blank=True)
     user=models.ForeignKey(Account,on_delete=models.CASCADE,related_name='uid')
     Img=models.ImageField(upload_to="images",null=True,blank=True)
     Caption=models.TextField(null=True,blank=True)

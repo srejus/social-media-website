@@ -15,7 +15,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from .extra import comment
-
+from datetime import datetime
 
 import smtplib
 
@@ -136,11 +136,21 @@ def follow(request,id):
 def upload(request):
     if request.method == 'POST':
         capt=request.POST.get('caption')
+        topic = request.POST.get('topic')
         img=request.FILES.get('image')
+
+        #Find current time and date
+        # datetime object containing current date and time
+        now = datetime.now()
+        
+    
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        
 
         curent_ac=Account.objects.get(user=request.user)
 
-        x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=img)
+        x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=img,post_topic=topic,posted_time=dt_string)
         x.save()
 
         #Fetch Lst of followers to send mail
