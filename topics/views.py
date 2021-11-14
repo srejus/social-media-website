@@ -1,27 +1,27 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from topics.models import Topic, Topic_follow
 
 # Create your views here.
 def follow_topic(request,id):
-    usr = request.user
+    
     tpc =Topic.objects.get(id = id)
     try:
-        x=Topic_follow.objects(user_id = request.user , topic_follow = tpc)
+        x=Topic_follow(user_id = request.user , topic_id = tpc)
         x.save()
     except:
-        pass
-    return HttpResponse("Ok")
+       pass
+    return redirect('/topic/'+str(id))
 
 def unfollow_topic(request,id):
-    usr = request.user
+    
     tpc =Topic.objects.get(id = id)
     if Topic_follow.objects.filter(user_id = request.user , topic_id = tpc).exists():
         x=Topic_follow.objects.get(user_id = request.user , topic_id = tpc)
         x.delete()
 
-    return HttpResponse("Ok")
+    return redirect('/topic/'+str(id))
  
  #Code works when click on view button
 def topic(request,id):

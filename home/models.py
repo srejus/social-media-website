@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from topics.models import Topic
 
 # Create your models here.
 class Account(models.Model):
@@ -23,6 +24,7 @@ class Post(models.Model):
     Caption=models.TextField(null=True,blank=True)
     Likes=models.ManyToManyField(User,related_name='Post',null=True,blank=True)
     Total_likes=models.IntegerField(null=True,blank=True,default=0)
+    post_topic = models.CharField(max_length=250,null=True,blank=True)
 
     def isLiked(self,request):
         if Post.objects.filter(id=self.id).filter(Likes=request.user).exists():
