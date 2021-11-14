@@ -41,7 +41,8 @@ def index(request):
     if Following.objects.filter(Bywho=id).exists():
         myfeeds=feeds.feedalgo(id)
         suggest_feeds=feeds.suggestalgo(id)
-        return render(request,'index.html',{'myfeed':myfeeds,'sf':suggest_feeds})
+        topic_feed = feeds.topic_algo(id)
+        return render(request,'index.html',{'myfeed':myfeeds,'sf':suggest_feeds,'tf':topic_feed})
     else:
         x=Account.objects.order_by('?')[:11]
         return render(request,'index.html',{'y':x})
