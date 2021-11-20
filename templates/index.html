@@ -79,6 +79,13 @@
 
     <!-----Search Bar Sections Ends-->
 
+    <div class="topic-div">
+        {% for i in tp %}
+        <a href="/topic/{{i.id}}" class="topic-button">{{i.topic_name}}</a>
+        {% endfor %}
+        
+    </div>
+
 
     <!----Main Section----------->
     {% if y %}

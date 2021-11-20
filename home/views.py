@@ -43,16 +43,20 @@ def send_mail(to,msg):
 @login_required(login_url='login')
 def index(request):
     id=request.user.id
+    #Topics
+    tpc = Topic.objects.all()
     if Following.objects.filter(Bywho=id).exists():
         myfeeds=feeds.feedalgo(id)
         suggest_feeds=feeds.suggestalgo(id)
         topic_feed = feeds.topic_algo(id)
         
-        return render(request,'index.html',{'myfeed':myfeeds,'sf':suggest_feeds,'tf':topic_feed})
+        
+
+        return render(request,'index.html',{'myfeed':myfeeds,'sf':suggest_feeds,'tf':topic_feed,'tp':tpc})
     else:
         suggest_feeds=feeds.suggestalgo(id)
         x=Account.objects.order_by('?')[:11]
-        return render(request,'index.html',{'sf':suggest_feeds})
+        return render(request,'index.html',{'sf':suggest_feeds,'tp':tpc})
 
 def Login(request):
     if request.method=='POST':

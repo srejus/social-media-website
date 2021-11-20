@@ -327,3 +327,25 @@ ul li{
         display: none !important;
     }
 }
+
+
+/*Top slider for topics*/
+
+.topic-div{
+    width: 90%;
+    margin: 10px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    /* flex-wrap: nowrap; */
+    overflow: scroll;
+    overflow-y: hidden;
+}
+.topic-button{
+    min-width: 250px;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 5px;
+    border: 0.7px solid black
+}
