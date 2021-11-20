@@ -1,12 +1,14 @@
 .inp{
-    width: 400px;
+    width: 350px;
     height: 40px;
+    margin-left: 15px;
     border:none;
     border-radius: 0.3rem;
 }
 .login-btn{
-    width: 400px;
+    width: 350px;
     height: 40px;
+    margin-left: 10px;
     color: black;
     outline: none;
     border:0.8px solid black;
