@@ -69,7 +69,7 @@ def Login(request):
         else:
             messages.warning(request,'Password or Username does not match!')
             return render(request,'login.html')
-        return index(request)
+        return redirect('/')
     return render(request,'login.html')
 
 def signup(request):
