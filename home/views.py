@@ -122,7 +122,7 @@ def profile(request,id):
 
 @login_required(login_url='login')
 def follow(request,id):
-    print(id)
+#    print(id)
     if Following.objects.filter(Bywho=request.user.id).filter(whom=id).exists():
         x=Following.objects.filter(Bywho=request.user.id).filter(whom=id)
         x.delete()
@@ -151,12 +151,14 @@ def upload(request):
         img=request.FILES.get('image')
 
         # compress the image here and then save it
-        i = Image.open(img)
-        thumb_io = BytesIO()
-        i.save(thumb_io, format='JPEG', quality=70)
-        inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, str(img), 
+       	try:
+            i = Image.open(img)
+            thumb_io = BytesIO()
+            i.save(thumb_io, format='JPEG', quality=70)
+            inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, str(img), 
                                                 'image/jpeg', thumb_io.tell(), None)
-
+        except:
+              pass
         #Find current time and date
         # datetime object containing current date and time
         now = datetime.now()
@@ -168,7 +170,8 @@ def upload(request):
 
         curent_ac=Account.objects.get(user=request.user)
 
-        x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=inmemory_uploaded_file,post_topic=topic,posted_time=dt_string)
+       # x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=inmemory_uploaded_file,post_topic=topic,posted_time=dt_string)
+        x = Post(UID=request.user,user=curent_ac,Caption=capt,post_topic=topic,posted_time=dt_string)
         x.save()
 
         #Fetch Lst of followers to send mail

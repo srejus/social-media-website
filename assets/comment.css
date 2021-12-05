@@ -1,0 +1,50 @@
+
+.cmt-div{
+    width: 95%;
+    border-radius: 0.3rem;
+    margin: 5px;
+    border:0.7px solid black;
+    
+}
+
+.cmt-pro-img{
+    width: 50px;
+    height: 50px;
+    border:none;
+    border-radius: 50%;
+    padding: 10px;
+    margin: 10px;
+}
+
+@media(max-width:852px){
+    .cmt-pro-img{
+        width: 40px;
+        height: 40px;
+        border:none;
+        border-radius: 50%;
+        padding: 10px;
+        margin: 10px;
+    }
+}
+
+.cmtbox{
+    width: 80%;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    height: 35px;
+    border-radius: 0.3rem;
+    border:0.7px solid black;
+    outline: none;
+}
+.cmt-btn{
+    color: black;
+    background-color: springgreen;
+    border:0.7px solid black;
+    border-radius: 0.3rem;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    outline: none;
+    height: 35px;
+    width: 70px;
+}
