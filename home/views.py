@@ -114,8 +114,8 @@ def Login(request):
 
         
         otp = generateOTP()
-        # send_otp(username,otp)
-        print("OTP:",otp)
+        send_otp(username,otp)
+        # print("OTP:",otp)
         # signup(request,username)
         
         # # user = authenticate(request, username=username, password=password)
