@@ -175,7 +175,7 @@ ul li{
 
 @media(max-width:852px){
     .main{
-        width: 95%;
+        width: 90%;
         margin-left: 10px;
         margin-right: 10px;
         
@@ -343,9 +343,13 @@ ul li{
 }
 .topic-button{
     min-width: 250px;
-    color: black;
+    color: white;
     text-decoration: none;
+    margin-right: 15px;
+    padding-top: 10px;
+    border-radius: 25px;
     text-align: center;
     padding-top: 5px;
-    border: 0.7px solid black
+    border: 0.7px solid black;
+    background-color: black;
 }

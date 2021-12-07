@@ -51,14 +51,16 @@
         <p style="color:red;">{{m}}</p>
         {% endfor %}
         <br>
-        <h1 class="main-text">Login to your Account</h1><br><br><br>
-        <form accept="login" method="POST">
+        <h1 class="main-text">Enter OTP</h1><br><br><br>
+        <form action="otp" method="POST">
             {% csrf_token %}
-            <input type="text" name="otpEnter" placeholder="Enter OTP" class="inp"><br><br>
-            <input type="hidden" name="otpRel" placeholder="password" value="otp" class="inp"><br><br>
+            <br><br><br>
+            <input type="number" name="otpEnter" placeholder="Enter OTP" class="inp"><br><br>
+            <input type="hidden" name="otpRel" placeholder="password" value="{{ot}}" class="inp">
+            <input type="hidden" name="uname" placeholder="password" value="{{u}}" class="inp">
             <input type="submit" value="Login" class="login-btn">
             <br><br><br><br>
-            <a href="/signup">Create an Account</a>
+            
 
         </form>
     </div>

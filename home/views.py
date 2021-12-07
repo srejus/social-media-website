@@ -1,3 +1,4 @@
+from os import uname
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -17,6 +18,11 @@ from django.contrib.auth import authenticate, login
 from .extra import comment
 from datetime import datetime
 
+from twilio.rest import Client
+
+import random,math
+
+
 import smtplib
 
 from django.db.models import Q 
@@ -32,6 +38,50 @@ def send_mail(to,msg):
             server.login('memail@gmail.com', '************')
             server.sendmail('memail@gmail.com', to, msg)
             return 0
+        
+def send_otp(number,otp):
+
+    # Your Account SID from twilio.com/console
+    account_sid = "AC281598eccfe4d2fb5f431116b85b6ab3"
+    # Your Auth Token from twilio.com/console
+    auth_token  = "d2586055b46b0aa38dd35f57f6dc2ab2"
+
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+        to="+91"+str(number), 
+        from_="+13205476036",
+        body="Your OTP:"+str(otp))
+
+
+def generateOTP() :
+ 
+    # Declare a digits variable 
+    # which stores all digits
+    digits = "0123456789"
+    OTP = ""
+ 
+   # length of password can be changed
+   # by changing value in range
+    for i in range(4) :
+        OTP += digits[math.floor(random.random() * 10)]
+ 
+    return OTP
+
+def generatePassword():
+    chars = "0123456789abcdtesfjghsbnbb.>,L;HysbcjsV~`'=+/?"
+    password = ""
+ 
+   # length of password can be changed
+   # by changing value in range
+    for i in range(8) :
+        password += chars[math.floor(random.random() * 10)]
+ 
+    return password
+
+  
+
+   
 
 
 # def mail(request):
@@ -61,51 +111,69 @@ def index(request):
 def Login(request):
     if request.method=='POST':
         username=request.POST.get("username")
-        password=request.POST.get("pass1")
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
+
+        
+        otp = generateOTP()
+        # send_otp(username,otp)
+        print("OTP:",otp)
+        # signup(request,username)
+        
+        # # user = authenticate(request, username=username, password=password)
+        # if user is not None:
+        #     login(request, user)
   
-        else:
-            messages.warning(request,'Password or Username does not match!')
-            return render(request,'login.html')
-        return index(request)
+        # else:
+        #     messages.warning(request,'Password or Username does not match!')
+        #     return render(request,'login.html')
+        return render(request,'opt.html',{'ot':otp,'u':username})
     return render(request,'login.html')
-
-def signup(request):
+def otp(request):
     if request.method == 'POST':
-        username = request.POST.get("username")
-        name=request.POST.get("name")
-        password1 = request.POST.get("pass1")
-        password2 = request.POST.get("pass2")
-
-        if username == '':
-            messages.warning(request, 'Enter Username')
-            return render(request, 'signup.html')
-
-        # Checking Password Strength(Length only)
-        if len(password1) < 8:
-            messages.warning(request, 'Password is too short!')
-            return render(request, 'signup.html')
-
-        if password1 == password2:
+        real_otp = request.POST.get('otpRel')
+        inp_otp = request.POST.get('otpEnter')
+        username = request.POST.get('uname')
+        
+        if real_otp == inp_otp:
+            #code for fetch password and login or signup
             if User.objects.filter(username=username).exists():
-                messages.warning(request, 'Username already exists!')
-                return render(request, 'signup.html')
+                pw = generatePassword()
+                
+                u = User.objects.get(username=username)
+                u.set_password(pw)
+                u.save()
+
+                #login code
+
+                user = authenticate(username=username, password=pw)
+                if user is not None:
+                    login(request,user)
+                    return redirect('edit')
+                else:
+                    return Login(request)
+
+                return redirect('/')
             else:
-                user = User.objects.create_user(
-                username=username, password=password1)
+                mail = str(username)+'@zero.com'
+                pw = generatePassword()
+                user = User.objects.create_user(username, mail, pw)
                 user.save()
 
-                profile=Account(user=user,Name=name)
-                profile.save()
+                x=Account(user=user,phone=username)
+                x.save()
+                #login code
 
+                user = authenticate(username=username, password=pw)
+                if user is not None:
+                    login(request,user)
+                    return redirect('edit')
+                else:
+                    return Login(request)
+                return redirect('/')
+    return render(request,'opt.html')
 
-                return Login(request)
-        else:
-            messages.warning(request, 'Password not matching!')
-            return render(request, 'signup.html')
-    return render(request, 'signup.html')
+def signup(request,username):
+    #Code to Create an Account
+    return render(request, 'opt.html')
 
 @login_required(login_url='login')
 def profile(request,id):
@@ -122,7 +190,7 @@ def profile(request,id):
 
 @login_required(login_url='login')
 def follow(request,id):
-    print(id)
+#    print(id)
     if Following.objects.filter(Bywho=request.user.id).filter(whom=id).exists():
         x=Following.objects.filter(Bywho=request.user.id).filter(whom=id)
         x.delete()
@@ -151,12 +219,14 @@ def upload(request):
         img=request.FILES.get('image')
 
         # compress the image here and then save it
-        i = Image.open(img)
-        thumb_io = BytesIO()
-        i.save(thumb_io, format='JPEG', quality=70)
-        inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, str(img), 
+        try:
+            i = Image.open(img)
+            thumb_io = BytesIO()
+            i.save(thumb_io, format='JPEG', quality=70)
+            inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, str(img), 
                                                 'image/jpeg', thumb_io.tell(), None)
-
+        except:
+              pass
         #Find current time and date
         # datetime object containing current date and time
         now = datetime.now()
@@ -168,7 +238,8 @@ def upload(request):
 
         curent_ac=Account.objects.get(user=request.user)
 
-        x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=inmemory_uploaded_file,post_topic=topic,posted_time=dt_string)
+       # x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=inmemory_uploaded_file,post_topic=topic,posted_time=dt_string)
+        x = Post(UID=request.user,user=curent_ac,Caption=capt,post_topic=topic,posted_time=dt_string)
         x.save()
 
         #Fetch Lst of followers to send mail

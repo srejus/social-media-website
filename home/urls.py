@@ -21,4 +21,5 @@ urlpatterns=[
     path("post/<int:id>",views.share,name='share'),
     path('following/<int:id>',views.followg,name='followg'),
     path('followers/<int:id>',views.followers,name='followers'),
+    path('otp',views.otp,name='otp'),
 ]

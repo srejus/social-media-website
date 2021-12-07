@@ -17,10 +17,10 @@ def feedalgo(id):
 
     time_threshold = datetime.now() - timedelta(hours=3)
 
-    print(time_threshold)
+#    print(time_threshold)
 
     qs=Post.objects.filter(UID__in=flst).filter(Time__lt=time_threshold).order_by('-Time')
-    print(qs)
+ #   print(qs)
 
 #Use nested for loops for out the data
 
@@ -41,7 +41,7 @@ def blogalgo(id):
 
     time_threshold = datetime.now() - timedelta(hours=3)
 
-    print(time_threshold)
+  #  print(time_threshold)
 
     qs=Blog.objects.filter(user__in=flst).filter(Time__lt=time_threshold).order_by('-Time')
     
@@ -65,7 +65,7 @@ def suggestalgo(id):
 
     time_threshold = datetime.now() - timedelta(hours=3)
 
-    print(time_threshold)
+   # print(time_threshold)
 
     qs=Post.objects.exclude(UID__in = flst).filter(Time__lt=time_threshold).order_by('-Time')
    
@@ -98,6 +98,6 @@ def topic_algo(id):
         tpc_lst.append(i.topic_id)
     
     qs=Post.objects.exclude(UID__in = flst).filter(post_topic__in = tpc_lst)
-    print(qs)
+    #print(qs)
 
     return(qs)
