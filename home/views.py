@@ -42,15 +42,15 @@ def send_mail(to,msg):
 def send_otp(number,otp):
 
     # Your Account SID from twilio.com/console
-    account_sid = "AC281598eccfe4d2fb5f431116b85b6ab3"
+    account_sid = "AC281598eccfe4nhgughghghh3"
     # Your Auth Token from twilio.com/console
-    auth_token  = "d2586055b46b0aa38dd35f57f6dc2ab2"
+    auth_token  = "d2586055b46b0dc2ab2"
 
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
         to="+91"+str(number), 
-        from_="+13205476036",
+        from_="+136",
         body="Your OTP:"+str(otp))
 
 
