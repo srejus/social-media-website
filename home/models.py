@@ -26,6 +26,7 @@ class Post(models.Model):
     Likes=models.ManyToManyField(User,related_name='Post',null=True,blank=True)
     Total_likes=models.IntegerField(null=True,blank=True,default=0)
     post_topic = models.CharField(max_length=250,null=True,blank=True)
+    post_content = models.TextField(default="")
 
     def isLiked(self,request):
         if Post.objects.filter(id=self.id).filter(Likes=request.user).exists():

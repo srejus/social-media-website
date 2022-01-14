@@ -1,0 +1,93 @@
+{% load static %}
+{% static "images" as baseUrl%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/dropdown.js' %}"></script>
+
+    
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+    <link rel="stylesheet" href="{% static 'read.css' %}">
+    <link rel="stylesheet" href="{% static 'blog.css' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social</title>
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <link rel="stylesheet" href="{%static 'card.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-----JQUERY CDN----->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+    <!-------Google Font Import---------------->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+
+ <link rel="icon" href="https://www.logodesign.net/logo/alt-5640ld.png">
+</head>
+<body>
+    
+    <nav>
+       
+        <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
+        <div class="nav-row">
+        <label class="fnt-1" style="font-size: 40px;margin-left: 10px;">Zero</label>
+            <div class="nav-row-itm">
+            <!-- <a href="/"  style="margin-top: 0px;margin-left: 10px;"> <i class="fa fa-home it" style="font-size: 35px;margin-left: 40px;"></i></a> -->
+
+           <a href="/upload"  style="margin-top: 0px;margin-left: 10px;"> <i class="fa fa-pencil it" style="font-size: 30px;margin-left: 40px;"></i></a>
+           &nbsp;&nbsp;<a href="/profile/{{request.user.id}}"  style="margin-top: 0px;"> <i class="fa fa-user it" style="font-size: 30px;margin-left: 40px;"></i></a>
+        </div>
+        
+    </div>
+    
+
+    <div class="reader">
+      {% if pst.Img %}
+        <img src="{{baseUrl}}/{{pst.Img}}" class="reader-img">
+      {% endif %}
+
+      <div style="min-height: 200px;">
+        <h1 class="blog-head" style="font-size: 40px;">{{pst.Caption}}</h1>
+        <br><br><br>
+      </div>
+        
+        <p class="text-3" style="font-size:22px;line-height:50px;margin-top: 50px;">
+          {% autoescape off %}
+          {{pst.post_content}}
+          {% endautoescape %}
+        </p>
+        <br><br><br>
+        <!----Post like comment section-->
+            <form>{% csrf_token %}
+            <div class="row">
+                
+                <a id="{{pst.id}}" onclick="react(this.id)" class="non mid" style="margin-left:-10px;">
+                    
+                    {% if request.user in i.Likes.all %}
+                        <i id="7{{pst.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;color:red;"></i>
+                    {% else %}
+                        <i id="7{{pst.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;"></i>
+                    {% endif %}
+
+                    <div style="width: 40px;">
+                      <p class="para-text" style="color:black;min-width: 120px;">&nbsp;&nbsp;<span id=1{{pst.id}}>{{pst.Total_likes}}</span>&nbsp;likes</p></a>
+                    </div>
+                    
+                <a href="/comment/{{pst.id}}" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946412.png" style="width:20px;"></a>
+                <a type="button" onclick="share('/post/{{pst.id}}')" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
+                {% if request.user == pst.UID %}
+                <a href="#" class="non mid" style="padding-left: 700px;"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
+                {% endif %}  
+            </div>
+        </form>
+        <!----Post like comment section-->
+    </div>
+
+    </body>
+    </html>

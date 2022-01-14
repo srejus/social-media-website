@@ -1,4 +1,5 @@
-from os import uname
+# from os import uname
+import re
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -107,6 +108,10 @@ def index(request):
         suggest_feeds=feeds.suggestalgo(id)
         x=Account.objects.order_by('?')[:11]
         return render(request,'index.html',{'sf':suggest_feeds,'tp':tpc})
+
+def reader(request,id):
+    post = Post.objects.get(id=id)
+    return render(request,'read.html',{'pst':post})
 
 def Login(request):
     if request.method=='POST':
