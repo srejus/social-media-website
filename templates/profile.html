@@ -120,38 +120,27 @@
                 {% else %}
                 <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" class="post-sub-profile">
                 {% endif %}
-               <a href="/profile/{{i.UID.id}}" class="non" style="width: 180px; color:black;"> <p class="post-user">{{i.user.Name}}</p></a>
-              
+                <div class="row c">
+                    <a style="color: black;width: auto;" class="non" href="/profile/{{i.user.user.id}}"><p class="main-text">{{i.user.Name}}</p></a>
+                    {% if i.user.verified %}
+                        <img class="verified" src="https://cdn-icons-png.flaticon.com/512/3472/3472620.png">
+                    {% endif %}
+                </div>
+
             </div>
+            
             <!-----user photo and name Sec Ends-->
             <div class="col">
                 {% if i.Caption != None %}
-                    <p class="post-text" style="margin-left: 35px;">{{i.Caption}}</p>
+                <a style="color: black;text-decoration: none;" href="/reader/{{i.id}}"><b><p>{{i.Caption}}</p></b></a>
                 {% endif %}<br>
                 {% if i.Img %}
                 <img src="{{baseUrl}}/{{i.Img}}" alt="" class="post-image">
                 {% endif %}
-
-            </div>
-            <form>{% csrf_token %}
-            <div class="row">
                 
-                <a id="{{i.id}}" onclick="react(this.id)" class="non mid" style="margin-left:-10px;">
-                    
-                    {% if request.user in i.Likes.all %}
-                        <i id="7{{i.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;color:red;"></i>
-                    {% else %}
-                        <i id="7{{i.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;"></i>
-                    {% endif %}
-                    <p class="para-text" style="color:black;">&nbsp;&nbsp;&nbsp;<span id=1{{i.id}}>{{i.Total_likes}}</span>&nbsp;&nbsp;likes</p></a>
-                <a href="/comment/{{i.id}}" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946412.png" style="width:20px;"></a>
-                <a type="button" onclick="share('/post/{{i.id}}')" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
-                {% if request.user == i.UID %}
-                
-                <a  onclick="deletepost('{{i.id}}')" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" style="width:20px;opacity: 0.9;"></a>
-                {% endif %}  
+                <p style="font-size: 15px;margin-top: 7px;opacity: 0.7;">{{i.posted_time}}</p>
             </div>
-        </form>
+            
         </div>
         <br><br><br>
     <!------CARD DIV FOR POST------------>

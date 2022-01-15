@@ -1,0 +1,162 @@
+*{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.head-div{
+    width: 100%;
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg');
+    height: 450px;
+    
+}
+
+.main-sec{
+    margin:20px;
+}
+.text-mid{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-2{
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.text-3{
+    font-size: 18px;
+    line-height: 30px;
+
+}
+
+
+.text-1{
+    font-size: 55px;
+    font-weight: 700;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/*Blog related Styles*/
+
+.blog-div{
+    margin:20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: space-around;
+    flex-wrap: wrap;
+}
+
+
+.blog-card{
+    margin-top: 120px;
+    margin-left: 35px;
+    width:300px;
+    min-height: 230px;
+    border:none;
+    padding:12px;
+    /* border-radius: 7px; */
+}
+
+.blog-img{
+    width: 100%;
+    height: 200px;
+    
+}
+
+.blog-head{
+    font-weight: 700;
+    font-size: 25px;
+    height: 50px;
+}
+
+.btn-1{
+    color:white;
+    border: none;
+    outline: none;
+    min-width: 120px;
+    height:40px;
+    background-color: black;
+    border-radius: 7px;
+}
+
+.desc-div{
+    height: 90px;
+}
+
+.reader{
+    width:59%;
+    margin-top: 150px;
+    margin-left: 50px;
+    padding: 25px;
+}
+
+.reader-img{
+    width: 100%;
+    height: 500px;
+    margin-bottom: 30px;
+}
+
+/*Contact page Styles*/
+
+.main{
+    width: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inp{
+    width: 320px;
+    height: 35px;
+    border:0.7px solid black;
+    outline: none;
+    margin-top: 25px;
+    border-radius: 0px;
+}
+
+@media(max-width:852px){
+    .head-div{
+        width: 100%;
+        background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg');
+        height: 220px;
+    }
+
+    .blog-div{
+        margin:20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: space-around;
+    }
+
+    .blog-card{
+        margin-top: 35px;
+        width:90%;
+        min-height: 300px;
+        border:none;
+        padding:12px;
+        /* border-radius: 7px; */
+    }
+
+    .desc-div{
+        height: 90px;
+    }
+
+    
+    .reader{
+        width:90%;
+        margin-top: 150px;
+        margin-left: 15px;
+        padding: 25px;
+    }
+    .reader-img{
+        width: 100%;
+        height: 300px;
+        margin-bottom: 30px;
+    }
+}

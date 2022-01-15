@@ -8,6 +8,7 @@ urlpatterns=[
     path('profile/<int:id>',views.profile,name='profile'),
     path('follow/<int:id>',views.follow,name='follow'),
     path('upload',views.upload,name='upload'),
+    path('upload1',views.upload1,name='upload1'),
     path('react',views.react,name='react'),
     path('comment/<int:id>',views.comment,name='comment'),
     path('commentreact',views.commentreact,name='commentreact'),
@@ -22,4 +23,5 @@ urlpatterns=[
     path('following/<int:id>',views.followg,name='followg'),
     path('followers/<int:id>',views.followers,name='followers'),
     path('otp',views.otp,name='otp'),
+    path('reader/<int:id>',views.reader,name='reader'),
 ]

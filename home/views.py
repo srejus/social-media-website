@@ -15,6 +15,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
+from django.views.decorators.csrf import csrf_exempt
+
 from .extra import comment
 from datetime import datetime
 
@@ -38,20 +40,34 @@ def send_mail(to,msg):
             server.login('memail@gmail.com', '************')
             server.sendmail('memail@gmail.com', to, msg)
             return 0
+
+def send_otp(to,msg):
+    try:
+            
+            body = "Your OTP for Zero is ",str(msg)
+           
+            server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+            server.login('deliveryfoodeato@gmail.com', 'FoodeatoOnline.123')
+            
+            server.sendmail('deliveryfoodeato@gmail.com',to,str(body))
+            
+            return 0
+    except:
+        pass
         
-def send_otp(number,otp):
+# def send_otp(number,otp):
 
-    # Your Account SID from twilio.com/console
-    account_sid = "AC281598eccfe4d2fb5f431116b85b6ab3"
-    # Your Auth Token from twilio.com/console
-    auth_token  = "d2586055b46b0aa38dd35f57f6dc2ab2"
+#     # Your Account SID from twilio.com/console
+#     account_sid = "AC281598eccfe4d2fb5f431116b85b6ab3"
+#     # Your Auth Token from twilio.com/console
+#     auth_token  = "d2586055b46b0aa38dd35f57f6dc2ab2"
 
-    client = Client(account_sid, auth_token)
+#     client = Client(account_sid, auth_token)
 
-    message = client.messages.create(
-        to="+91"+str(number), 
-        from_="+13205476036",
-        body="Your OTP:"+str(otp))
+#     message = client.messages.create(
+#         to="+91"+str(number), 
+#         from_="+13205476036",
+#         body="Your OTP:"+str(otp))
 
 
 def generateOTP() :
@@ -79,9 +95,6 @@ def generatePassword():
  
     return password
 
-  
-
-   
 
 
 # def mail(request):
@@ -108,13 +121,20 @@ def index(request):
         x=Account.objects.order_by('?')[:11]
         return render(request,'index.html',{'sf':suggest_feeds,'tp':tpc})
 
+def reader(request,id):
+    post = Post.objects.get(id=id)
+    return render(request,'read.html',{'pst':post})
+
 def Login(request):
     if request.method=='POST':
         username=request.POST.get("username")
 
         
         otp = generateOTP()
-        send_otp(username,otp)
+
+        o=str(otp)
+        
+        send_otp(username,o)
         # print("OTP:",otp)
         # signup(request,username)
         
@@ -215,8 +235,11 @@ def follow(request,id):
 def upload(request):
     if request.method == 'POST':
         capt=request.POST.get('caption')
+        content = request.POST.get('content')
         topic = request.POST.get('topic')
         img=request.FILES.get('image')
+
+        
 
         # compress the image here and then save it
         try:
@@ -239,7 +262,61 @@ def upload(request):
         curent_ac=Account.objects.get(user=request.user)
 
        # x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=inmemory_uploaded_file,post_topic=topic,posted_time=dt_string)
-        x = Post(UID=request.user,user=curent_ac,Caption=capt,post_topic=topic,posted_time=dt_string)
+        x = Post(UID=request.user,user=curent_ac,Caption=capt,post_topic=topic,posted_time=dt_string,post_content=content)
+        x.save()
+
+        #Fetch Lst of followers to send mail
+        # mail_lst=Following.objects.filter(whom=request.user)
+
+        # for i in mail_lst:
+        #     try:
+               
+        #         ac=Account.objects.get(user=i.Bywho)
+
+                
+        #         me=Account.objects.get(user=request.user).Name
+
+        #         message = 'Subject: {}\n\n{}'.format(me+' posted an Update',' Hi user,'+ac.Name+' started following you')
+        #         send_mail(ac.Email,message)
+        #     except:
+        #         pass
+
+
+        return redirect('profile/'+str(request.user.id))
+    return render(request,'upload.html')
+
+@csrf_exempt
+def upload1(request):
+    if request.method == 'POST':
+        capt=request.POST.get('caption')
+        topic = request.POST.get('topic')
+        content = request.POST.get('content')
+        img=request.FILES.get('image')
+
+        
+
+        # compress the image here and then save it
+        try:
+            i = Image.open(img)
+            thumb_io = BytesIO()
+            i.save(thumb_io, format='JPEG', quality=70)
+            inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, str(img), 
+                                                'image/jpeg', thumb_io.tell(), None)
+        except:
+              pass
+        #Find current time and date
+        # datetime object containing current date and time
+        now = datetime.now()
+        
+    
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        
+
+        curent_ac=Account.objects.get(user=request.user)
+
+       # x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=inmemory_uploaded_file,post_topic=topic,posted_time=dt_string)
+        x = Post(UID=request.user,user=curent_ac,Caption=capt,post_topic=topic,posted_time=dt_string,post_content=content)
         x.save()
 
         #Fetch Lst of followers to send mail
@@ -269,7 +346,7 @@ def react(request):
     
         post=Post.objects.get(id=post_id)
         allLikes=post.Likes.all()
-        print(allLikes)
+        # print(allLikes)
         if len(allLikes) == 0:
             post.Likes.add(request.user)
             c=post.Likes.count()
@@ -278,7 +355,7 @@ def react(request):
             like=1
         else:
             for t in allLikes:
-                print(t)
+                # print(t)
                 if t == request.user:
                     post.Likes.remove(request.user)
                     c=post.Likes.count()
@@ -300,7 +377,7 @@ def commentdelete(request):
     if request.method == 'POST':
         idstr = request.POST.get('pid')
         id = int(idstr.replace('z',''))
-        print(idstr)
+        # print(idstr)
         #Code for remove a comment
         comment_delete(id)
         return JsonResponse({'res':'ok'})
@@ -322,7 +399,7 @@ def commentreact(request):
     
         post=Comment.objects.get(id=post_id)  #post means comment
         allLikes=post.commentlike.all()
-        print(allLikes)
+        #print(allLikes)
         if len(allLikes) == 0:
             post.commentlike.add(request.user)
             c=post.commentlike.count()
@@ -331,7 +408,7 @@ def commentreact(request):
             like=1
         else:
             for t in allLikes:
-                print(t)
+                # print(t)
                 if t == request.user:
                     post.commentlike.remove(request.user)
                     c=post.commentlike.count()
