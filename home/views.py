@@ -43,9 +43,9 @@ def send_mail(to,msg):
 def send_otp(number,otp):
 
     # Your Account SID from twilio.com/console
-    account_sid = "AC281598eccfe4nhgughghghh3"
+    account_sid = "AC2815hghghh3"
     # Your Auth Token from twilio.com/console
-    auth_token  = "d2586055b46b0dc2ab2"
+    auth_token  = "d25862ab2"
 
     client = Client(account_sid, auth_token)
 
