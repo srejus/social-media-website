@@ -13,8 +13,11 @@ class Account(models.Model):
     Bio=models.TextField(null=True,blank=True)
     verified=models.BooleanField(default=False)
     def __str__(self): 
-        rt=self.user.username+' ('+self.Name+')'
-        return rt
+        try:
+            rt=self.user.username+' ('+self.Name+')'
+            return rt
+        except:
+            pass
 
 class Post(models.Model):
     UID=models.ForeignKey(User,on_delete=models.CASCADE,related_name='uid')
@@ -26,6 +29,8 @@ class Post(models.Model):
     Likes=models.ManyToManyField(User,related_name='Post',null=True,blank=True)
     Total_likes=models.IntegerField(null=True,blank=True,default=0)
     post_topic = models.CharField(max_length=250,null=True,blank=True)
+    post_content = models.TextField(default="")
+    total_views = models.IntegerField(default=0)
 
     def isLiked(self,request):
         if Post.objects.filter(id=self.id).filter(Likes=request.user).exists():

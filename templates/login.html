@@ -1,11 +1,12 @@
 {% load static %}
+{% static "images" as baseUrl%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Login</title>
+    <title>Hectagon Login</title>
     <link rel="stylesheet" href="{%static 'style.css'%}">
     <link rel="stylesheet" href="{%static 'form.css'%}">
     <link rel="stylesheet" href="{%static 'card.css'%}">
@@ -17,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
 
- <link rel="icon" href="https://www.logodesign.net/logo/alt-5640ld.png">
+ <link rel="icon" href="{{baseUrl}}/HECTAGONLOGOGREEN.png">
 </head>
 <body>
     
@@ -25,7 +26,8 @@
        
         <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
         <div class="nav-row">
-            <label class="fnt-1" style="font-size: 40px;margin-left: 10px;">Zero</label>
+            <label class="fnt-1" style="font-size: 40px;margin-left: 10px;"><img src="{{baseUrl}}/HECTAGONLOGOGREEN.png" style="width:120px;margin-top: -35px;"></label>
+
                 <div class="nav-row-itm">
                <!-- <a href="/upload"  style="margin-top: 0px;margin-left: 25px;"> <i class="fa fa-camera it" style="font-size: 30px;margin-left: 40px;"></i></a> -->
                &nbsp;&nbsp;<a href="/profile/{{request.user.id}}"  style="margin-top: 0px;"> <i class="fa fa-user it" style="font-size: 30px;margin-left: 40px;"></i></a>
@@ -55,7 +57,7 @@
         <form accept="login" method="POST">
             {% csrf_token %}
             <br><br><br>
-            <input type="number" name="username" placeholder="Enter Phone Number" class="inp"><br><br>
+            <input type="email" name="username" placeholder="Enter Your Email" class="inp"><br><br>
             
             <input type="submit" value="Next" class="login-btn">
             <br><br><br><br>

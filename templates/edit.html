@@ -1,11 +1,12 @@
 {% load static %}
+{% static "images" as baseUrl%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Edit profile</title>
+    <title>Hectagon Edit profile</title>
     <link rel="stylesheet" href="{%static 'style.css'%}">
     <link rel="stylesheet" href="{%static 'form.css'%}">
     <link rel="stylesheet" href="{%static 'card.css'%}">
@@ -17,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
 
- <link rel="icon" href="https://www.logodesign.net/logo/alt-5640ld.png">
+ <link rel="icon" href="{{baseUrl}}/HECTAGONLOGOGREEN.png">
 </head>
 <body>
     
@@ -25,7 +26,7 @@
         
         <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
         <div class="nav-row">
-            <a href="/" style="text-decoration: none;color: black;"><label class="fnt-1" style="font-size: 40px;margin-left: 10px;">Zero</label></a>
+            <a href="/" style="text-decoration: none;color: black;"><label class="fnt-1" style="font-size: 40px;margin-left: 10px;"><img src="{{baseUrl}}/HECTAGONLOGOGREEN.png" style="width:120px;margin-top: -35px;"></label></a>
                 <div class="nav-row-itm">
                 <!-- <a href="/"  style="margin-top: 0px;margin-left: 25px;"> <i class="fa fa-home it" style="font-size: 35px;margin-left: 40px;"></i></a> -->
 
@@ -60,7 +61,7 @@
             {% csrf_token %}
             <p class="main-text">Update Profile Picture</p><br>
             <input type="file" name="image"><br><br>
-            <input class="inp x" type="text" name="name" placeholder="Edit Display Name"><br><br>
+            <input class="inp x" type="text" name="name" required placeholder="Edit Display Name"><br><br>
             <input class="inp x" type="number" name="phone" placeholder="Edit Phone Number"><br><br>
             <textarea type="text" name="bio" placeholder="Edit bio" class="inp" style="height: 200px;border:0.7px solid black"></textarea><br><br>
             <input type="submit" value="Update Profile" class="login-btn">

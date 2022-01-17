@@ -123,6 +123,8 @@ def index(request):
 
 def reader(request,id):
     post = Post.objects.get(id=id)
+    post.total_views = post.total_views+1
+    post.save()
     return render(request,'read.html',{'pst':post})
 
 def Login(request):
@@ -167,7 +169,11 @@ def otp(request):
                 user = authenticate(username=username, password=pw)
                 if user is not None:
                     login(request,user)
-                    return redirect('edit')
+                    prof = Account.objects.get(user=user.id)
+                    if prof.Name is None:
+                        return redirect('edit')
+                    else:
+                        return redirect('/')
                 else:
                     return Login(request)
 
@@ -185,10 +191,16 @@ def otp(request):
                 user = authenticate(username=username, password=pw)
                 if user is not None:
                     login(request,user)
-                    return redirect('edit')
+                    prof = Account.objects.get(user=user.id)
+                    if prof.Name is None:
+                        return redirect('edit')
+                    else:
+                        return redirect('/')
                 else:
                     return Login(request)
                 return redirect('/')
+        else:
+                return redirect('/login')
     return render(request,'opt.html')
 
 def signup(request,username):
@@ -220,17 +232,9 @@ def follow(request,id):
             x=Following(Bywho=request.user,whom=usr)
             x.save()
 
-            #Fetch user email to send mail
-            # try:
-           
-            #     email_ac=Account.objects.get(user=usr)
-            #     message = 'Subject: {}\n\n{}'.format('New Follower!',' Hi user,'+email_ac.Name+' started following you')
-            #     send_mail(email_ac.Email,message)
-            # except:
-            #     pass
-        
-    # return redirect('/profile/'+id)
-    return profile(request,id=id)
+       
+    return redirect('/profile/'+str(id))
+
 
 def upload(request):
     if request.method == 'POST':
@@ -264,22 +268,6 @@ def upload(request):
        # x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=inmemory_uploaded_file,post_topic=topic,posted_time=dt_string)
         x = Post(UID=request.user,user=curent_ac,Caption=capt,post_topic=topic,posted_time=dt_string,post_content=content)
         x.save()
-
-        #Fetch Lst of followers to send mail
-        # mail_lst=Following.objects.filter(whom=request.user)
-
-        # for i in mail_lst:
-        #     try:
-               
-        #         ac=Account.objects.get(user=i.Bywho)
-
-                
-        #         me=Account.objects.get(user=request.user).Name
-
-        #         message = 'Subject: {}\n\n{}'.format(me+' posted an Update',' Hi user,'+ac.Name+' started following you')
-        #         send_mail(ac.Email,message)
-        #     except:
-        #         pass
 
 
         return redirect('profile/'+str(request.user.id))
@@ -318,22 +306,6 @@ def upload1(request):
        # x=Post(UID=request.user,user=curent_ac,Caption=capt,Img=inmemory_uploaded_file,post_topic=topic,posted_time=dt_string)
         x = Post(UID=request.user,user=curent_ac,Caption=capt,post_topic=topic,posted_time=dt_string,post_content=content)
         x.save()
-
-        #Fetch Lst of followers to send mail
-        # mail_lst=Following.objects.filter(whom=request.user)
-
-        # for i in mail_lst:
-        #     try:
-               
-        #         ac=Account.objects.get(user=i.Bywho)
-
-                
-        #         me=Account.objects.get(user=request.user).Name
-
-        #         message = 'Subject: {}\n\n{}'.format(me+' posted an Update',' Hi user,'+ac.Name+' started following you')
-        #         send_mail(ac.Email,message)
-        #     except:
-        #         pass
 
 
         return redirect('profile/'+str(request.user.id))
@@ -449,16 +421,22 @@ def deletepost(request,id):
         
 
 def search(request,term):
-    qs = Account.objects.all()
-    for t in term.split():
-        qs = qs.filter( Q(Name__icontains = t))
+    if term != "" or term is not None:
+        qs = Account.objects.all()
+        for t in term.split():
+            qs = qs.filter( Q(Name__icontains = t))
 
 
-        #Topics
+            #Topics
 
-        tps = Topic.objects.all()
-        tp_follow = Topic_follow.objects.filter(user_id = request.user.id)
-    return render(request,'search.html',{'q':qs,'ts':tps,'tf':tp_follow})
+            tps = Topic.objects.all()
+            tp_follow = Topic_follow.objects.filter(user_id = request.user.id)
+        return render(request,'search.html',{'q':qs,'ts':tps,'tf':tp_follow})
+    else:
+        return redirect('/')
+
+def search1(request):
+    return redirect('/')
 
 def edit(request):
     if request.method == 'POST':

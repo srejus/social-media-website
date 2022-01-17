@@ -24,4 +24,5 @@ urlpatterns=[
     path('followers/<int:id>',views.followers,name='followers'),
     path('otp',views.otp,name='otp'),
     path('reader/<int:id>',views.reader,name='reader'),
+    path('search/',views.search1,name='search1'),
 ]

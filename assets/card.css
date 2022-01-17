@@ -13,7 +13,7 @@
         /* border: 0.7px solid grey; */
         background-color: white;
         display: flex;
-        width: 90%;
+        width: 100%;
         padding:15px;
         flex-direction: column;
     }

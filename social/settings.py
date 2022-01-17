@@ -26,11 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'i1qt&tpreoa=u8#=93n5dne9^^o8bd%ooh%i8f^q%obe*XXXXX'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-
+CSRF_TRUSTED_ORIGINS = ['hectagon.co.in']
 # Application definition
 
 INSTALLED_APPS = [

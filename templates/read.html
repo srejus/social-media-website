@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social</title>
+    <title>Hectagon</title>
     <link rel="stylesheet" href="{% static 'style.css'%}">
     <link rel="stylesheet" href="{%static 'card.css'%}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
 
- <link rel="icon" href="https://www.logodesign.net/logo/alt-5640ld.png">
+ <link rel="icon" href="{{baseUrl}}/HECTAGONLOGOGREEN.png">
 </head>
 <body>
     
@@ -36,13 +36,17 @@
        
         <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
         <div class="nav-row">
-        <label class="fnt-1" style="font-size: 40px;margin-left: 10px;">Zero</label>
+          <a href="/" style="text-decoration: none;color: black;"><label class="fnt-1" style="font-size: 40px;margin-left: 10px;"><img src="{{baseUrl}}/HECTAGONLOGOGREEN.png" style="width:120px;margin-top: -35px;"></label></a>
             <div class="nav-row-itm">
             <!-- <a href="/"  style="margin-top: 0px;margin-left: 10px;"> <i class="fa fa-home it" style="font-size: 35px;margin-left: 40px;"></i></a> -->
 
+
+            {% if request.user.is_authenticated %}
+
            <a href="/upload"  style="margin-top: 0px;margin-left: 10px;"> <i class="fa fa-pencil it" style="font-size: 30px;margin-left: 40px;"></i></a>
            &nbsp;&nbsp;<a href="/profile/{{request.user.id}}"  style="margin-top: 0px;"> <i class="fa fa-user it" style="font-size: 30px;margin-left: 40px;"></i></a>
-        </div>
+            {% endif %}
+          </div>
         
     </div>
     <!-- <div style="height: 120px;"></div> -->
@@ -53,10 +57,30 @@
         <img src="{{baseUrl}}/{{pst.Img}}" class="reader-img">
       {% endif %}
 
-      <div style="min-height: 200px;">
-        <h1 class="blog-head" style="font-size: 40px;">{{pst.Caption}}</h1>
-        <br><br><br>
+      <div style="min-height: 100px;">
+        <h1 class="blog-head" style="font-size: 27px;">{{pst.Caption}}</h1>
+        <br><br>
       </div>
+
+
+
+       <!-----user photo and name-->
+       <div class="row">
+        {% if pst.user.profile_picture %}
+        <img src="{{baseUrl}}/{{pst.user.profile_picture}}" alt="" class="post-sub-profile">
+        {% else %}
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" class="post-sub-profile">
+        {% endif %}
+        <div class="row c">
+            <a style="color: black;width: auto;margin-top: 25px;" class="non" href="/profile/{{pst.user.user.id}}"><p class="main-text">{{pst.user.Name}}</p></a>
+            {% if pst.user.verified %}
+                <img class="verified" src="https://cdn-icons-png.flaticon.com/512/3472/3472620.png">
+            {% endif %}
+        </div>
+
+    </div>
+
+
         
         <p class="text-3" style="font-size:22px;line-height:50px;margin-top: 50px;">
           {% autoescape off %}
@@ -64,31 +88,59 @@
           {% endautoescape %}
         </p>
         <br><br><br>
-        <!----Post like comment section-->
-            <form>{% csrf_token %}
-            <div class="row">
-                
-                <a id="{{pst.id}}" onclick="react(this.id)" class="non mid" style="margin-left:-10px;">
-                    
-                    {% if request.user in i.Likes.all %}
-                        <i id="7{{pst.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;color:red;"></i>
-                    {% else %}
-                        <i id="7{{pst.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;"></i>
-                    {% endif %}
 
-                    <div style="width: 40px;">
-                      <p class="para-text" style="color:black;min-width: 120px;">&nbsp;&nbsp;<span id=1{{pst.id}}>{{pst.Total_likes}}</span>&nbsp;likes</p></a>
-                    </div>
-                    
-                <a href="/comment/{{pst.id}}" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946412.png" style="width:20px;"></a>
-                <a type="button" onclick="share('/post/{{pst.id}}')" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
-                {% if request.user == pst.UID %}
-                <a href="#" class="non mid" style="padding-left: 700px;"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
-                {% endif %}  
-            </div>
-        </form>
         <!----Post like comment section-->
+
+        {% if request.user.is_authenticated %}
+
+
+            <form>{% csrf_token %}
+              <div class="row">
+                  
+                  <a id="{{pst.id}}" onclick="react(this.id)" class="non mid" style="margin-left:-10px;">
+                      
+                      {% if request.user in i.Likes.all %}
+                          <i id="7{{pst.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;color:red;"></i>
+                      {% else %}
+                          <i id="7{{pst.id}}" class="fa fa-heart" style="width: 50px;font-size: 20px;"></i>
+                      {% endif %}
+
+                      <div style="width: 40px;">
+                        <p class="para-text" style="color:black;min-width: 120px;">&nbsp;&nbsp;<span id=1{{pst.id}}>{{pst.Total_likes}}</span>&nbsp;likes</p></a>
+                      </div>
+                      
+                  <a href="/comment/{{pst.id}}" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946412.png" style="width:20px;"></a>
+                  <a type="button" onclick="share('/post/{{pst.id}}')" class="non mid"><img src="https://cdn-icons-png.flaticon.com/512/157/157960.png" style="width:20px;opacity: 0.9;"></a>
+                  
+
+                  
+
+
+
+
+                  {% if request.user == pst.UID %}
+                  <a href="/deletepost/{{pst.id}}" class="non mid" style="padding-left: 15px;"><button type="button" style="min-width:80px;">Delete Post</button></a>
+                  {% else %}
+
+                  <div class="row non mid">
+                    <p style="color: black;margin-right: 10px;;">{{pst.total_views}}</p><img style="width:20px;height:20px;" src="https://image.flaticon.com/icons/png/512/65/65000.png">
+                  </div>
+                  
+                  
+                  {% endif %}  
+              </div>
+          </form>
+        
+          {% else %}
+
+          <a href="/" style="color:dodgerblue;">Login for like and comment</a>
+
+          {% endif %}
+        
     </div>
+    
+
+  <!----Post like comment section-->
 
     </body>
     </html>

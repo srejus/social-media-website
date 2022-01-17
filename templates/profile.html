@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Profile</title>
+    <title>Hectagon Profile</title>
 
     <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/dropdown.js' %}"></script>
@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
 
- <link rel="icon" href="https://www.logodesign.net/logo/alt-5640ld.png">
+ <link rel="icon" href="{{baseUrl}}/HECTAGONLOGOGREEN.png">
 </head>
 <body>
     
@@ -34,7 +34,7 @@
        
         <!-- <img src="HECTAGONLOGO.png" class="logo"> -->
         <div class="nav-row">
-            <a href="/" style="text-decoration: none;color: black;"><label class="fnt-1" style="font-size: 40px;margin-left: 10px;">Zero</label></a>
+            <a href="/" style="text-decoration: none;color: black;"><label class="fnt-1" style="font-size: 40px;margin-left: 10px;"><img src="{{baseUrl}}/HECTAGONLOGOGREEN.png" style="width:120px;margin-top: -35px;"></label></a>
                 <div class="nav-row-itm">
                 <!-- <a href="/"  style="margin-top: 0px;margin-left: 25px;"> <i class="fa fa-home it" style="font-size: 35px;margin-left: 40px;"></i></a> -->
 
@@ -121,7 +121,7 @@
                 <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" class="post-sub-profile">
                 {% endif %}
                 <div class="row c">
-                    <a style="color: black;width: auto;" class="non" href="/profile/{{i.user.user.id}}"><p class="main-text">{{i.user.Name}}</p></a>
+                    <a style="color: black;width: auto;margin-top: 25px;" class="non" href="/profile/{{i.user.user.id}}"><p class="main-text">{{i.user.Name}}</p></a>
                     {% if i.user.verified %}
                         <img class="verified" src="https://cdn-icons-png.flaticon.com/512/3472/3472620.png">
                     {% endif %}
@@ -137,7 +137,10 @@
                 {% if i.Img %}
                 <img src="{{baseUrl}}/{{i.Img}}" alt="" class="post-image">
                 {% endif %}
-                
+                <br><br>
+                {% if request.user == i.user %}
+                <a href="/deletepost/{{i.id}}"><button>Delete</button></a>
+                {% endif %}
                 <p style="font-size: 15px;margin-top: 7px;opacity: 0.7;">{{i.posted_time}}</p>
             </div>
             

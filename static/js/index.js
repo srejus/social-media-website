@@ -1,4 +1,5 @@
 function react(fetched_id){
+    console.log('hello');
     $.ajax({
         method: "POST",
         url: "/react",
@@ -90,7 +91,13 @@ function postcomment(){
 
 function srch(){
     let term=document.getElementById('search').value;
-    window.location = '/search/' +term;
+    
+    if(term != undefined || term != ""){
+        window.location = '/search/' +term;
+        
+    }
+    
+    
 }
 
 function share(url){
