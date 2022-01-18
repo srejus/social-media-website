@@ -47,9 +47,9 @@ def send_otp(to,msg):
             body = "Your OTP for Zero is ",str(msg)
            
             server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-            server.login('deliveryfoodeato@gmail.com', 'FoodeatoOnline.123')
+            server.login('dev5555il.com', 'F5555555')
             
-            server.sendmail('deliveryfoodeato@gmail.com',to,str(body))
+            server.sendmail('d.com',to,str(body))
             
             return 0
     except:
